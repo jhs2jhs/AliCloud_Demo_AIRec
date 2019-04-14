@@ -100,10 +100,16 @@ MaxCompute中的全量数据，智能推荐系统只会在初始化时读取一�
 ### upload data from local into dataworks
 #### enable [odpscmd](http://repo.aliyun.com/odpscmd/) in your local environment
 ```
-mkdir odpscmd & cd odpscmd
 wget http://repo.aliyun.com/download/odpscmd/0.30.2/odpscmd_public.zip
-tar zxf odpscmd_public.zip
+mkdir odpscmd_public
+tar -C odpscmd_public -zxf odpscmd_public.zip
+ln -s odpscmd_public/bin/odpscmd odpscmd
+# modify setting in odpscmd_public/config/odps_config.ini
+# cp odps_config.ini odpscmd_public/conf/odps_config.ini
 ```
+![image](/images/odpscmd_config.jpg)
+
+
 
 
 ```

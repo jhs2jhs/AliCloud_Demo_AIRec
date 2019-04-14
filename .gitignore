@@ -1,7 +1,9 @@
 
 .DS_Store
-odpscmd/conf/*
-odpscmd/*
+odps_config.ini
+odpscmd
+odpscmd_public
+odpscmd_public.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
