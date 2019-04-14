@@ -90,7 +90,24 @@ Infrastructure: MaxCompute + OSS + Dataworks
 # demo
 
 ## first time data preparation in dataworks
-### create a workspace in simple mode
+
+### download test dataset (take news as an example)
+[test dataset] (https://help.aliyun.com/document_detail/106708.html)
+```
+mkdir test_dataset
+cd test_dataset
+
+wget http://airec-init-data.oss-cn-beijing.aliyuncs.com/%E5%95%86%E5%93%81/behavior_item.csv
+wget http://airec-init-data.oss-cn-beijing.aliyuncs.com/%E5%95%86%E5%93%81/item_item.csv
+wget http://airec-init-data.oss-cn-beijing.aliyuncs.com/%E5%95%86%E5%93%81/user_item.csv
+
+wget http://airec-init-data.oss-cn-beijing.aliyuncs.com/%E6%96%B0%E9%97%BB%E8%B5%84%E8%AE%AF/behavior_news.csv
+wget http://airec-init-data.oss-cn-beijing.aliyuncs.com/%E6%96%B0%E9%97%BB%E8%B5%84%E8%AE%AF/item_news.csv
+wget http://airec-init-data.oss-cn-beijing.aliyuncs.com/%E6%96%B0%E9%97%BB%E8%B5%84%E8%AE%AF/user_news.csv
+```
+![image](/images/odpscmd_download_test_datasets.jpg)
+
+### create a workspace in simple mode (TODO: create dataworks project in api?)
 ![image](/images/dw_create_workspace_en_1.jpg)
 ![image](/images/dw_create_workspace_en_2.jpg)
 
@@ -200,4 +217,49 @@ CREATE TABLE IF NOT EXISTS behavior_news (
 LIFECYCLE 30;
 ```
 
-[image](/image/odpscmd_create_tables.jpg)
+![image](/image/odpscmd_create_tables.jpg)
+
+##### upload data from local environemnt into dataworks
+```
+./odpscmd
+-- ds=20190413 is the partition in dataworks
+-- [behavior_item | item_item | user_item] is the table created in last steps
+
+tunnel upload -acp=true -h=true ./test_dataset/behavior_news.csv behavior_news/ds=20190413;
+tunnel upload -acp=true -h=true ./test_dataset/item_news.csv item_news/ds=20190413;
+tunnel upload -acp=true -h=true ./test_dataset/user_news.csv user_news/ds=20190414;
+
+tunnel upload -acp=true -h=true ./test_dataset/behavior_item.csv behavior_item/ds=20190413;
+tunnel upload -acp=true -h=true ./test_dataset/item_item.csv item_item/ds=20190413;
+tunnel upload -acp=true -h=true ./test_dataset/user_item.csv user_item/ds=20190413;
+```
+
+![image](/images/odpscmd_upload_dataset_1.jpg)
+![image](/images/odpscmd_upload_dataset_2.jpg)
+
+##### enable ram auth for AIRec to access data cross product 
+visit [ram console](https://ram.console.aliyun.com/users)
+![image](/images/auth_ram_create_1.jpg)
+![image](/images/auth_ram_create_2.jpg)
+![image](/images/auth_ram_create_3.jpg)
+![image](/images/auth_dw_1.jpg)
+![image](/images/auth_dw_2.jpg)
+
+TODO: add policy? https://help.aliyun.com/document_detail/100826.html?spm=a2c4g.11186623.6.560.7fd21689Atlsqu 
+```
+add user RAM$odps_read_airec;
+create role odpsReadRufei;
+grant odpsReadRufei to RAM$odps_read_airec;
+```
+
+##### create AIRec instance
+[purchase](https://airec-cn-hangzhou.console.aliyun.com/#/instances)
+[image](/images/instnace_buy.jpg)
+[image](/images/instnace_buy_2.jpg)
+
+
+##### upload test dataset
+
+##### view results
+![image](/images/instance_result_rest.jpg)
+![image](/images/instance_result_view.jpg)

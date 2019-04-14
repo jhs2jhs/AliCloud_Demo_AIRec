@@ -4,6 +4,7 @@ odps_config.ini
 odpscmd
 odpscmd_public
 odpscmd_public.zip
+test_dataset/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
