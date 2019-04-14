@@ -28,17 +28,23 @@ Infrastructure: MaxCompute + OSS + Dataworks
 ### news 
 
 1. [item](https://help.aliyun.com/document_detail/99248.html)
-1.1 item_id: 
-2.1 item_type: [image | article | video | shortvideo | item | recipe]
-3.1 status: [0 | 1]
+```
+1 item_id: 
+2 item_type: [image | article | video | shortvideo | item | recipe]
+3 status: [0 | 1]
+```
+2. [user](https://help.aliyun.com/document_detail/99248.html)
+```
+1. user_id: 
+```
+3. [behavior](https://help.aliyun.com/document_detail/99248.html)
+```
+1. item_id: needs to be with item_id
+2 item_type:
+3 bhv_type: [explose |  click | like | unlike | comment |  collect |  stay |  share |  download |  tip |  subscribe]
+4 bhv_value: 
+5 user_id:
+5 trace_id: [Alibaba | selfhold]
+```
 
-### [user](https://help.aliyun.com/document_detail/99248.html)
-1.1 user_id: 
 
-### [behavior](https://help.aliyun.com/document_detail/99248.html)
-1.1 item_id: needs to be with item_id
-2.1 item_type:
-3.1 bhv_type: [explose |  click | like | unlike | comment |  collect |  stay |  shjare |  download |  tip |  subscribe]
-4.1 bhv_value: 
-5.1 user_id:
-5.1 trace_id: [Alibaba | selfhold]
