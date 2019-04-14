@@ -21,5 +21,5 @@ Instance = vertical + scenario + dataversion +
 Infrastructure: MaxCompute + OSS + Dataworks
 
 ## data flow:
-![alt](/images/airec_dataflow.png)
+![alt](/images/airec_workflow.png)
 
