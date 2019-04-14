@@ -110,15 +110,94 @@ ln -s odpscmd_public/bin/odpscmd odpscmd
 ![image](/images/odpscmd_config.jpg)
 
 
-
-
+##### create three tables in dataworks for sync later 
 ```
-CREATE TABLE IF NOT EXISTS behavior_news (trace_id STRING COMMENT "请求追踪/埋点ID",trace_info STRING COMMENT "请求埋点信息",platform STRING COMMENT "客户端平台",device_model STRING COMMENT "设备型号",imei STRING COMMENT "设备ID",app_version STRING COMMENT "app的版本号",net_type STRING COMMENT "网络型号",longitude STRING COMMENT "位置经度",latitude STRING COMMENT "位置纬度",ip STRING COMMENT "客户端IP信息",login STRING COMMENT "是否登录用户",report_src STRING COMMENT "上报来源类型",scene_id STRING COMMENT "场景ID",user_id STRING COMMENT "用户ID",item_id STRING COMMENT "内容ID",item_type STRING COMMENT "内容的类型",module_id STRING COMMENT "模块ID",page_id STRING COMMENT "页面ID",position STRING COMMENT "内容所在的位置信息",bhv_type STRING COMMENT "行为类型",bhv_value STRING COMMENT "行为详情",bhv_time STRING COMMENT "行为发生的时间戳")PARTITIONED BY (ds STRING)LIFECYCLE 30;
+CREATE TABLE IF NOT EXISTS user_news (
+    user_id STRING COMMENT "用户唯一ID",
+    user_id_type STRING COMMENT "用户注册类型",
+    third_user_name STRING COMMENT "第三方用户名称",
+    third_user_type STRING COMMENT "第三方平台名称",
+    phone_md5 STRING COMMENT "用户手机号的md5值",
+    imei STRING COMMENT "用户设备ID",
+    content STRING COMMENT "用户内容",
+    gender STRING COMMENT "性别",
+    age STRING COMMENT "年龄",
+    age_group STRING COMMENT "年龄段",
+    country STRING COMMENT "国家",
+    city STRING COMMENT "城市",
+    ip STRING COMMENT "最后登录IP",
+    device_model STRING COMMENT "设备型号",
+    register_time STRING COMMENT "注册时间戳",
+    last_login_time STRING COMMENT "上次登录时间戳",
+    last_modify_time STRING COMMENT "用户信息的最后修改时间戳",
+    tags STRING COMMENT "用户tags",
+    source STRING,features STRING,
+    num_features STRING
+) PARTITIONED BY (ds STRING)
+LIFECYCLE 30;
 
-CREATE TABLE IF NOT EXISTS item_news (item_id STRING COMMENT '内容唯一标识ID',item_type STRING COMMENT '内容的类型',title STRING COMMENT '内容标题',content STRING COMMENT '内容简介',user_id STRING COMMENT '发布用户ID',pub_time STRING COMMENT '发布时间',status STRING COMMENT '是否可推荐',expire_time STRING COMMENT '内容失效时间戳，单位s',last_modify_time STRING COMMENT '内容信息的最后修改时间戳，单位s',scene_id STRING COMMENT '场景ID',duration STRING COMMENT '时长，秒',category_level STRING COMMENT '类目层级数，例如3级类目',category_path STRING COMMENT '类目路径，下划线联接',tags STRING COMMENT '标签，多个标签使用英文逗号分隔',channel STRING COMMENT '频道，多个标签使用英文逗号分隔',organization STRING COMMENT '机构列表，多个标签使用英文逗号分隔',author STRING COMMENT '作者列表，多个标签使用英文逗号分隔',pv_cnt STRING COMMENT '一个月内曝光次数',click_cnt STRING COMMENT '一个月内点击次数',like_cnt STRING COMMENT '一个月内点赞次数',unlike_cnt STRING COMMENT '一个月内踩次数',comment_cnt STRING COMMENT '一个月内评论次数',collect_cnt STRING COMMENT '一个月内收藏次数',share_cnt STRING COMMENT '一个月内分享次数',download_cnt STRING COMMENT '一个月内下载次数',tip_cnt STRING COMMENT '一个月内打赏数',subscribe_cnt STRING COMMENT '一个月内关注数',source_id STRING COMMENT '物料经由哪个平台进入场景',country STRING COMMENT '国家编码',city STRING COMMENT '城市名称',features STRING COMMENT '物料离散特征',num_features STRING COMMENT '物料连续特征',weight STRING COMMENT 'item加权权重1-10000')PARTITIONED BY (ds STRING)LIFECYCLE 30;
-试用
+CREATE TABLE IF NOT EXISTS item_news (
+    item_id STRING COMMENT '内容唯一标识ID',
+    item_type STRING COMMENT '内容的类型',
+    title STRING COMMENT '内容标题',
+    content STRING COMMENT '内容简介',
+    user_id STRING COMMENT '发布用户ID',
+    pub_time STRING COMMENT '发布时间',
+    status STRING COMMENT '是否可推荐',
+    expire_time STRING COMMENT '内容失效时间戳，单位s',
+    last_modify_time STRING COMMENT '内容信息的最后修改时间戳，单位s',
+    scene_id STRING COMMENT '场景ID',
+    duration STRING COMMENT '时长，秒',
+    category_level STRING COMMENT '类目层级数，例如3级类目',
+    category_path STRING COMMENT '类目路径，下划线联接',
+    tags STRING COMMENT '标签，多个标签使用英文逗号分隔',
+    channel STRING COMMENT '频道，多个标签使用英文逗号分隔',
+    organization STRING COMMENT '机构列表，多个标签使用英文逗号分隔',
+    author STRING COMMENT '作者列表，多个标签使用英文逗号分隔',
+    pv_cnt STRING COMMENT '一个月内曝光次数',
+    click_cnt STRING COMMENT '一个月内点击次数',
+    like_cnt STRING COMMENT '一个月内点赞次数',
+    unlike_cnt STRING COMMENT '一个月内踩次数',
+    comment_cnt STRING COMMENT '一个月内评论次数',
+    collect_cnt STRING COMMENT '一个月内收藏次数',
+    share_cnt STRING COMMENT '一个月内分享次数',
+    download_cnt STRING COMMENT '一个月内下载次数',
+    tip_cnt STRING COMMENT '一个月内打赏数',
+    subscribe_cnt STRING COMMENT '一个月内关注数',
+    source_id STRING COMMENT '物料经由哪个平台进入场景',
+    country STRING COMMENT '国家编码',
+    city STRING COMMENT '城市名称',
+    features STRING COMMENT '物料离散特征',
+    num_features STRING COMMENT '物料连续特征',
+    weight STRING COMMENT 'item加权权重1-10000'
+) PARTITIONED BY (ds STRING)
+LIFECYCLE 30;
 
-
-CREATE TABLE IF NOT EXISTS user_news (user_id STRING COMMENT "用户唯一ID",user_id_type STRING COMMENT "用户注册类型",third_user_name STRING COMMENT "第三方用户名称",third_user_type STRING COMMENT "第三方平台名称",phone_md5 STRING COMMENT "用户手机号的md5值",imei STRING COMMENT "用户设备ID",content STRING COMMENT "用户内容",gender STRING COMMENT "性别",age STRING COMMENT "年龄",age_group STRING COMMENT "年龄段",country STRING COMMENT "国家",city STRING COMMENT "城市",ip STRING COMMENT "最后登录IP",device_model STRING COMMENT "设备型号",register_time STRING COMMENT "注册时间戳",last_login_time STRING COMMENT "上次登录时间戳",last_modify_time STRING COMMENT "用户信息的最后修改时间戳",tags STRING COMMENT "用户tags",source STRING,features STRING,num_features STRING)PARTITIONED BY (ds STRING)LIFECYCLE 30;
-
+CREATE TABLE IF NOT EXISTS behavior_news (
+    trace_id STRING COMMENT "请求追踪/埋点ID",
+    trace_info STRING COMMENT "请求埋点信息",
+    platform STRING COMMENT "客户端平台",
+    device_model STRING COMMENT "设备型号",
+    imei STRING COMMENT "设备ID",
+    app_version STRING COMMENT "app的版本号",
+    net_type STRING COMMENT "网络型号",
+    longitude STRING COMMENT "位置经度",
+    latitude STRING COMMENT "位置纬度",
+    ip STRING COMMENT "客户端IP信息",
+    login STRING COMMENT "是否登录用户",
+    report_src STRING COMMENT "上报来源类型",
+    scene_id STRING COMMENT "场景ID",
+    user_id STRING COMMENT "用户ID",
+    item_id STRING COMMENT "内容ID",
+    item_type STRING COMMENT "内容的类型",
+    module_id STRING COMMENT "模块ID",
+    page_id STRING COMMENT "页面ID",
+    position STRING COMMENT "内容所在的位置信息",
+    bhv_type STRING COMMENT "行为类型",
+    bhv_value STRING COMMENT "行为详情",
+    bhv_time STRING COMMENT "行为发生的时间戳"
+) PARTITIONED BY (ds STRING)
+LIFECYCLE 30;
 ```
+
+[image](/image/odpscmd_create_tables.jpg)
