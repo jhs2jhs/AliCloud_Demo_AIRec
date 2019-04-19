@@ -263,3 +263,10 @@ grant odpsReadRufei to RAM$odps_read_airec;
 ##### view results
 ![image](/images/instance_result_rest.jpg)
 ![image](/images/instance_result_view.jpg)
+
+
+##### get recommendation in python
+![image](/images/python_get_recommendation.jpg)
+
+##### get recommendation in php
+![image](/images/php_get_recommendation.jpg)
