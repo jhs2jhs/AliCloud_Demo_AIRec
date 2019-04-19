@@ -5,6 +5,8 @@ odpscmd
 odpscmd_public
 odpscmd_public.zip
 test_dataset/*
+ali_config.py
+php/aliyun-openapi-php-sdk
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
